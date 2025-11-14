@@ -22,6 +22,8 @@ public class DialogueManager : MonoBehaviour
     private int currentSentenceIndex;
     private Sprite currentPortrait;
 
+    public GameObject questUI;
+
     void Start()
     {
         // --- เปลี่ยนจาก Queue เป็น List ---
@@ -103,6 +105,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             // ถ้าถึงประโยคสุดท้ายแล้วกด "Next" = จบการสนทนา
+            questUI.SetActive(true);
             EndDialogue();
         }
     }
