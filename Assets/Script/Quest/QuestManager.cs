@@ -63,6 +63,7 @@ public class QuestManager : MonoBehaviour
             player = FindFirstObjectByType<Player>();
         }
 
+        questList.Add(new BossQuest());
         questList.Add(new KillQuest());
         questList.Add(new CollectQuest());
         questList.Add(new TestQuest());
