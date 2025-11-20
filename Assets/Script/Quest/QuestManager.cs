@@ -22,15 +22,18 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    public GameObject questUI;
     public List<Quest> questList = new List<Quest>();
-    public List<Button> questButtons = new List<Button>();
-    public Button acceptButton;
+    public GameObject rowPrefab;
+    public Transform rowParent;
 
     private Quest selectedQuest;
 
+    public GameObject questDetailUI;
     public TMP_Text questDetailTitle;
     public TMP_Text questDetailDesc;
 
+    public GameObject questProgressUI;
     public TMP_Text questProgressTitle;
     public TMP_Text[] questProgressStatus;
 
@@ -92,36 +95,34 @@ public class QuestManager : MonoBehaviour
 
     public void DisplayQuest()
     {
-        questButtons.Clear();
-
-        List<GameObject> objs = GameObjectHelper.FindObjectsWithTagIncludingInactive("QuestButton");
-        objs.Sort((a, b) => a.transform.GetSiblingIndex().CompareTo(b.transform.GetSiblingIndex()));
-
-        foreach (GameObject obj in objs)
+        foreach (Quest quests in questList)
         {
-            Button btn = obj.GetComponent<Button>();
-            if (btn != null)
-                questButtons.Add(btn);
-        }
-
-        if (questButtons != null)
-        {
-            for (int i = 0; i < questButtons.Count; i++)
+            GameObject questButton = Instantiate(rowPrefab, rowParent);
+            TMP_Text buttonText = questButton.GetComponentInChildren<TMP_Text>();
+            if (buttonText != null)
             {
-                int index = i;
+                buttonText.text = quests.questName;
+            } 
 
-                TMP_Text text = questButtons[i].GetComponentInChildren<TMP_Text>();
-                text.text = questList[i].questName;
-
-                questButtons[i].onClick.AddListener(() =>
-                {
-                    selectedQuest = questList[index];  // store selected quest
-                    UpdateQuestDetails();
-                });
+            Button btn = questButton.GetComponent<Button>();
+            if (btn != null)
+            {
+                Quest capturedQuest = quests;
+                btn.onClick.AddListener(() => OnButtonClicked(capturedQuest));
             }
-
-            acceptButton.onClick.AddListener(UpdateQuestProgress); 
         }
+    }
+
+    public void OnButtonClicked(Quest clickedQuest)
+    {
+        selectedQuest = clickedQuest;
+        UpdateQuestDetails();
+        UpdateQuestProgress();
+
+        questUI.SetActive(false);
+        questDetailUI.SetActive(true);
+
+        Debug.Log($"Clicked: {clickedQuest.questName}");
     }
 
     private void UpdateQuestDetails()
@@ -141,18 +142,5 @@ public class QuestManager : MonoBehaviour
     private GameObject GetSelectedObject()
     {
         return EventSystem.current.currentSelectedGameObject;
-    }
-
-    private Quest GetSelectedQuest()
-    {
-        GameObject selectedObj = GetSelectedObject();
-        if (selectedObj != null && questButtons != null)
-        {
-            int index = questButtons.IndexOf(selectedObj.GetComponent<Button>());
-            if (index == -1) return null; // item not found in the list
-
-            selectedQuest = questList[index];
-        }
-        return selectedQuest;
     }
 }
