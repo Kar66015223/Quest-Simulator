@@ -1,5 +1,4 @@
-// DialogueManager.cs (��Ѻ�ѻ�ô)
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,25 +12,28 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public Button nextButton;
 
-    // --- ���� 2 ��÷Ѵ��� ---
-    public Button previousButton; // < �ҡ���� "��͹��Ѻ" �����
-    public Image portraitImage; // < (Optional) �ҡ Image �ٻ����Ф������
+    public Button previousButton;
+    public Image portraitImage;
 
-    // --- ����¹�ҡ Queue �� List ---
+    
+    [Header("Player Control")]
+    public Player playerController; 
+
     private List<string> currentSentences;
     private int currentSentenceIndex;
     private Sprite currentPortrait;
 
+    [Header("Quest Elements")]
+    public Button acceptQuestButton;
     public GameObject questUI;
 
     void Start()
     {
-        // --- ����¹�ҡ Queue �� List ---
         currentSentences = new List<string>();
         dialoguePanel.SetActive(false);
 
-        // --- ��駤�һ��� ---
-        if (nextButton != null)
+        // --- ตั้งค่าปุ่ม ---
+        if (nextButton != null)
         {
             nextButton.onClick.AddListener(DisplayNextSentence);
         }
@@ -39,31 +41,57 @@ public class DialogueManager : MonoBehaviour
         {
             previousButton.onClick.AddListener(DisplayPreviousSentence);
         }
+        // ผูกปุ่ม "รับเควส"
+        if (acceptQuestButton != null)
+        {
+            acceptQuestButton.onClick.AddListener(AcceptQuest);
+            acceptQuestButton.gameObject.SetActive(false); // ซ่อนไว้ตอนเริ่ม
+        }
     }
 
-    // ���ʹ���١���¡�� NPCDialogue.cs
-    public void StartDialogue(Dialogue dialogue)
+    // เมธอดนี้ถูกเรียกโดย NPCDialogue.cs
+    public void StartDialogue(Dialogue dialogue)
     {
         dialoguePanel.SetActive(true);
         nameText.text = dialogue.npcName;
-        currentPortrait = dialogue.characterPortrait; // ���ٻ
+        currentPortrait = dialogue.characterPortrait;
 
-        // --- ������ List ���������������� ---
         currentSentences.Clear();
-        currentSentences.AddRange(dialogue.sentences); // ��������¤������
+        currentSentences.AddRange(dialogue.sentences);
 
-        // --- �����������¤�á ---
         currentSentenceIndex = 0;
         DisplayCurrentSentence();
+
+        // --- ส่วนที่ 1: แสดงปุ่ม "รับเควส" ทันทีที่บทสนทนาเริ่ม ---
+        if (acceptQuestButton != null)
+        {
+            // ตรวจสอบให้แน่ใจว่าปุ่ม Next/Previous แสดงอยู่
+            if (nextButton != null) nextButton.gameObject.SetActive(true);
+
+            acceptQuestButton.gameObject.SetActive(true);
+        }
+        // --- ส่วนที่เพิ่ม: ล็อกการเคลื่อนที่ของผู้เล่น ---
+        if (playerController == null)
+        {
+            // *** เปลี่ยนจาก PlayerController เป็น Player ***
+            playerController = FindObjectOfType<Player>();
+        }
+
+        if (playerController != null)
+        {
+            // สั่งให้ Player หยุดรับ Input จากคีย์บอร์ด
+            playerController.canReceiveInput = false; // <-- **แก้ไขตรงนี้**
+        }
     }
 
-    // ���ʹ����Ѻ�ʴ�����¤ � index �Ѩ�غѹ
-    private void DisplayCurrentSentence()
+    // เมธอดสำหรับแสดงประโยค ณ index ปัจจุบัน
+    private void DisplayCurrentSentence()
     {
-        // �ʴ���ͤ���
-        dialogueText.text = currentSentences[currentSentenceIndex];
+        // แสดงข้อความ
+        dialogueText.text = currentSentences[currentSentenceIndex];
 
-        // �ʴ��ٻ����Ф� (�����)
+        // แสดงรูปตัวละคร (ถ้ามี)
+        // ... (โค้ดแสดงรูปเดิม) ...
         if (portraitImage != null)
         {
             if (currentPortrait != null)
@@ -73,67 +101,103 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                // ��� NPC ���������ٻ ���͹��ͺ Image ����
                 portraitImage.gameObject.SetActive(false);
             }
         }
 
-        // �ѻവ����
+        // อัปเดตปุ่ม
         UpdateButtons();
     }
 
-    // --- ���ʹ��������Ѻ���� "��͹��Ѻ" ---
-    public void DisplayPreviousSentence()
+    // --- เมธอดใหม่สำหรับปุ่ม "ย้อนกลับ" ---
+    public void DisplayPreviousSentence()
     {
-        // ����ѧ���֧����¤�á (index > 0)
-        if (currentSentenceIndex > 0)
+        // ถ้ายังไม่ถึงประโยคแรก (index > 0)
+        if (currentSentenceIndex > 0)
         {
-            currentSentenceIndex--; // Ŵ index
-            DisplayCurrentSentence();
+            currentSentenceIndex--; // ลด index
+            DisplayCurrentSentence();
         }
     }
 
-    // --- ������ʹ "�Ѵ�" ---
-    public void DisplayNextSentence()
+    // --- ส่วนที่ 2: แก้ไขเมธอด "ถัดไป" ให้เน้นแค่การคุยต่อ/จบการคุย ---
+    public void DisplayNextSentence()
     {
-        // ����ѧ�ջ���¤�Ѵ� (�ѧ���֧����¤�ش����)
-        if (currentSentenceIndex < currentSentences.Count - 1)
+        // ถ้ายังมีประโยคถัดไป (ยังไม่ถึงประโยคสุดท้าย)
+        if (currentSentenceIndex < currentSentences.Count - 1)
         {
-            currentSentenceIndex++; // ���� index
-            DisplayCurrentSentence();
+            currentSentenceIndex++; // เพิ่ม index
+            DisplayCurrentSentence();
         }
         else
         {
-            // ��Ҷ֧����¤�ش�������ǡ� "Next" = �����ʹ���
-            questUI.SetActive(true);
-            EndDialogue();
+            // ถ้าถึงประโยคสุดท้ายแล้ว ให้ปิดกล่องบทสนทนา (ผู้เล่นมีปุ่มรับเควสแยกอยู่แล้ว)
+            EndDialogue();
         }
     }
 
-    // --- ���ʹ��������Ѻ��͹/�ʴ����� ---
-    private void UpdateButtons()
+    // --- เมธอดใหม่สำหรับซ่อน/แสดงปุ่ม ---
+    private void UpdateButtons()
     {
-        // ��͹���� "��͹��Ѻ" ����������¤�á�ش
-        if (previousButton != null)
+        // ซ่อนปุ่ม "ย้อนกลับ" ถ้าอยู่ประโยคแรกสุด
+        if (previousButton != null)
         {
             previousButton.gameObject.SetActive(currentSentenceIndex > 0);
         }
 
-        // (Optional) �����ҡ������ "�Ѵ�" ����¹�� "�Դ" �˹���ش����
-        // TextMeshProUGUI nextButtonText = nextButton.GetComponentInChildren<TextMeshProUGUI>();
-        // if (currentSentenceIndex == currentSentences.Count - 1)
-        // {
-        //     nextButtonText.text = "Close";
-        // }
-        // else
-        // {
-        //     nextButtonText.text = "Next";
-        // }
+        // *** Optional: หากต้องการเปลี่ยนปุ่ม "Next" เป็น "Close" เมื่อถึงหน้าสุดท้าย ***
+        TextMeshProUGUI nextButtonText = nextButton.GetComponentInChildren<TextMeshProUGUI>();
+        if (currentSentenceIndex == currentSentences.Count - 1)
+        {
+            if (nextButtonText != null) nextButtonText.text = "Close";
+        }
+        else
+        {
+            if (nextButtonText != null) nextButtonText.text = "Next";
+        }
     }
 
-    void EndDialogue()
+    // --- เมธอด: เมื่อกดปุ่ม "รับเควส" ---
+    public void AcceptQuest()
+    {
+        if (questUI != null)
+        {
+            questUI.SetActive(true); // แสดง UI เควส
+        }
+        EndDialogue(); // ปิดกล่องบทสนทนาและซ่อนปุ่มทั้งหมด
+    }
+
+    // --- ส่วนที่ 3: แก้ไขเมธอด EndDialogue() ให้ซ่อนทุกอย่าง ---
+    void EndDialogue()
     {
         dialoguePanel.SetActive(false);
+
+        // ซ่อนปุ่มทั้งหมดที่เกี่ยวข้องกับการสนทนา
+        if (acceptQuestButton != null)
+        {
+            acceptQuestButton.gameObject.SetActive(false);
+        }
+        if (nextButton != null)
+        {
+            // อาจจะซ่อน Next Button ด้วยเพื่อความแน่ใจ
+            nextButton.gameObject.SetActive(false);
+        }
+        if (previousButton != null)
+        {
+            previousButton.gameObject.SetActive(false);
+        }
+        // --- ส่วนที่เพิ่ม: ปลดล็อกการเคลื่อนที่ของผู้เล่น ---
+        if (playerController == null)
+        {
+            // *** เปลี่ยนจาก PlayerController เป็น Player ***
+            playerController = FindObjectOfType<Player>();
+        }
+        if (playerController != null)
+        {
+            // สั่งให้ Player กลับมารับ Input จากคีย์บอร์ดได้
+            playerController.canReceiveInput = true; // <-- **แก้ไขตรงนี้**
+        }
+
         Debug.Log("End of conversation.");
     }
 }

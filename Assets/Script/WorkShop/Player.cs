@@ -10,6 +10,8 @@ public class Player : Character
 
     // --- 1. เพิ่มตัวแปรนี้ ---
     private IInteractable currentInteractable; // ตัวแปรเก็บเป้าหมายที่อยู่ใกล้
+    [Header("Control")]
+    public bool canReceiveInput = true;
 
     Vector3 _inputDirection;
     bool _isAttacking = false;
@@ -24,9 +26,21 @@ public class Player : Character
 
     public void FixedUpdate()
     {
-        Move(_inputDirection);
-        Turn(_inputDirection);
-        Attack(_isAttacking);
+        // *** 1. ตรวจสอบว่าสามารถเคลื่อนที่ได้หรือไม่ ***
+        if (canReceiveInput)
+        {
+            Move(_inputDirection);
+            Turn(_inputDirection);
+            Attack(_isAttacking);
+        }
+        // *** 2. (ตัวเลือกเสริม): ถ้าถูกล็อก ให้หยุด RigidBody ทันที ***
+        else if (rb != null)
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        
         Interact(_isInteract);
     }
 
@@ -42,21 +56,30 @@ public class Player : Character
 
     private void HandleInput()
     {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+        // *** 1. ตรวจสอบเงื่อนไขการรับ Input การเดิน ***
+        if (canReceiveInput)
+        {
+            float x = Input.GetAxis("Horizontal");
+            float y = Input.GetAxis("Vertical");
+            _inputDirection = new Vector3(x, 0, y);
+        }
+        else
+        {
+            // *** 2. สำคัญมาก: ถ้าถูกล็อก ต้องตั้ง Input เป็นศูนย์ ***
+            _inputDirection = Vector3.zero;
+        }
 
-        _inputDirection = new Vector3(x, 0, y);
+        // ส่วน Attack และ Interact ยังคงทำงานได้ด้วยเมาส์/คีย์ E
         if (Input.GetMouseButtonDown(0))
         {
             _isAttacking = true;
         }
-
-        // --- 2. แก้ไขเงื่อนไขนี้ (ให้เช็คว่ามีเป้าหมายไหม) ---
         if (Input.GetKeyDown(KeyCode.E) && currentInteractable != null)
         {
             _isInteract = true;
         }
     }
+
 
     public void Attack(bool isAttacking)
     {
@@ -87,6 +110,7 @@ public class Player : Character
             _isInteract = false; // เคลียร์ flag หลังทำงาน
         }
     }
+
 
     // --- 4. เพิ่ม 2 เมธอดนี้ (สำหรับให้ NPC เรียก) ---
 
