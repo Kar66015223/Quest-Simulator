@@ -27,7 +27,7 @@ public class QuestManager : MonoBehaviour
     public GameObject rowPrefab;
     public Transform rowParent;
 
-    private Quest selectedQuest;
+    public Quest selectedQuest;
 
     public GameObject questDetailUI;
     public TMP_Text questDetailTitle;
@@ -86,6 +86,9 @@ public class QuestManager : MonoBehaviour
                 if (q.questStatus == Quest.QuestStatus.OnProgress)
                     q.CheckCompletion();
             }
+
+            questProgressStatus[0].gameObject.SetActive(false);
+            questProgressStatus[1].gameObject.SetActive(false);
 
             if (selectedQuest.questStatus == Quest.QuestStatus.Failed)
             {
@@ -154,25 +157,29 @@ public class QuestManager : MonoBehaviour
 
     public void RemoveQuest()
     {
-        if (selectedQuest.questStatus == Quest.QuestStatus.Completed)
+        if (selectedQuest != null)
         {
-            questList.Remove(selectedQuest);
-            Destroy(selectedQuest.uiButton);
+            if (selectedQuest.questStatus == Quest.QuestStatus.Completed)
+            {
+                questList.Remove(selectedQuest);
+                Destroy(selectedQuest.uiButton);
+                selectedQuest = null;
 
-            questProgressUI.SetActive(false);
-            questProgressStatus[0].gameObject.SetActive(false);
-            questProgressStatus[1].gameObject.SetActive(false);
+                questProgressUI.SetActive(false);
+                questProgressStatus[0].gameObject.SetActive(false);
+                questProgressStatus[1].gameObject.SetActive(false);
 
-            Debug.Log($"{selectedQuest.questName} removed from questList");
-        }
+                return;
+            }
 
-        if (selectedQuest.questStatus == Quest.QuestStatus.Failed)
-        {
-            questProgressUI.SetActive(false);
-            questProgressStatus[0].gameObject.SetActive(false);
-            questProgressStatus[1].gameObject.SetActive(false);
+            if (selectedQuest.questStatus == Quest.QuestStatus.Failed)
+            {
+                selectedQuest = null;
 
-            selectedQuest.questStatus = Quest.QuestStatus.Pending;
+                questProgressUI.SetActive(false);
+                questProgressStatus[0].gameObject.SetActive(false);
+                questProgressStatus[1].gameObject.SetActive(false);
+            } 
         }
     }
 }

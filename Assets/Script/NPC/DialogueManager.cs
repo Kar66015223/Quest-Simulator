@@ -25,6 +25,7 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Quest Elements")]
     public Button acceptQuestButton;
+    public Button completeQuestButton;
     public GameObject questUI;
 
     void Start()
@@ -81,6 +82,15 @@ public class DialogueManager : MonoBehaviour
         {
             // สั่งให้ Player หยุดรับ Input จากคีย์บอร์ด
             playerController.canReceiveInput = false; // <-- **แก้ไขตรงนี้**
+        }
+
+        if (QuestManager.Instance.selectedQuest != null)
+        {
+            if (QuestManager.Instance.selectedQuest.questStatus == Quest.QuestStatus.Completed || QuestManager.Instance.selectedQuest.questStatus == Quest.QuestStatus.Failed)
+            {
+                completeQuestButton.gameObject.SetActive(true);
+                acceptQuestButton.gameObject.SetActive(false);
+            } 
         }
     }
 
@@ -168,7 +178,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     // --- ส่วนที่ 3: แก้ไขเมธอด EndDialogue() ให้ซ่อนทุกอย่าง ---
-    void EndDialogue()
+    public void EndDialogue()
     {
         dialoguePanel.SetActive(false);
 
