@@ -138,9 +138,4 @@ public class QuestManager : MonoBehaviour
         selectedQuest.questStatus = Quest.QuestStatus.OnProgress;
         questProgressTitle.text = selectedQuest.questName;
     }
-
-    private GameObject GetSelectedObject()
-    {
-        return EventSystem.current.currentSelectedGameObject;
-    }
 }
