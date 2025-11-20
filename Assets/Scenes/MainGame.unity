@@ -2266,6 +2266,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1845830157}
+        m_TargetAssemblyTypeName: QuestManager, Assembly-CSharp
+        m_MethodName: UpdateQuestProgress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &531815873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7251,7 +7263,6 @@ MonoBehaviour:
   questProgressStatus:
   - {fileID: 2082561190}
   - {fileID: 890775832}
-  player: {fileID: 0}
 --- !u!4 &1845830158
 Transform:
   m_ObjectHideFlags: 0

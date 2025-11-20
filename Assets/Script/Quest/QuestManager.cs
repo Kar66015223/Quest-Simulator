@@ -37,7 +37,7 @@ public class QuestManager : MonoBehaviour
     public TMP_Text questProgressTitle;
     public TMP_Text[] questProgressStatus;
 
-    [SerializeField] private Player player;
+    private Player player;
 
     private void Awake()
     {
@@ -51,7 +51,7 @@ public class QuestManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Duplicate GameManager found. Destroying self.");
+            Debug.Log("Duplicate QuestManager found. Destroying self.");
             Destroy(gameObject);
         }
     }
@@ -91,6 +91,11 @@ public class QuestManager : MonoBehaviour
 
             Debug.Log($"{selectedQuest.questName} {selectedQuest.questStatus}");
         }
+
+        if (Input.GetKeyDown(KeyCode.L)) //test
+        {
+            RemoveQuest();
+        }
     }
 
     public void DisplayQuest()
@@ -98,6 +103,8 @@ public class QuestManager : MonoBehaviour
         foreach (Quest quests in questList)
         {
             GameObject questButton = Instantiate(rowPrefab, rowParent);
+            quests.uiButton = questButton;
+
             TMP_Text buttonText = questButton.GetComponentInChildren<TMP_Text>();
             if (buttonText != null)
             {
@@ -117,7 +124,6 @@ public class QuestManager : MonoBehaviour
     {
         selectedQuest = clickedQuest;
         UpdateQuestDetails();
-        UpdateQuestProgress();
 
         questUI.SetActive(false);
         questDetailUI.SetActive(true);
@@ -131,11 +137,35 @@ public class QuestManager : MonoBehaviour
         questDetailDesc.text = selectedQuest.questDesc;
     }
 
-    private void UpdateQuestProgress()
+    public void UpdateQuestProgress()
     {
         if (selectedQuest == null) return;
 
         selectedQuest.questStatus = Quest.QuestStatus.OnProgress;
         questProgressTitle.text = selectedQuest.questName;
+    }
+
+    public void RemoveQuest()
+    {
+        if (selectedQuest.questStatus == Quest.QuestStatus.Completed)
+        {
+            questList.Remove(selectedQuest);
+            Destroy(selectedQuest.uiButton);
+
+            questProgressUI.SetActive(false);
+            questProgressStatus[0].gameObject.SetActive(false);
+            questProgressStatus[1].gameObject.SetActive(false);
+
+            Debug.Log($"{selectedQuest.questName} removed from questList");
+        }
+
+        if (selectedQuest.questStatus == Quest.QuestStatus.Failed)
+        {
+            questProgressUI.SetActive(false);
+            questProgressStatus[0].gameObject.SetActive(false);
+            questProgressStatus[1].gameObject.SetActive(false);
+
+            selectedQuest.questStatus = Quest.QuestStatus.Pending;
+        }
     }
 }

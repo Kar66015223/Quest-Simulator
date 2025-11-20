@@ -7,6 +7,8 @@ public abstract class Quest
     public string questDesc;
     public QuestType questType;
     public QuestStatus questStatus;
+    public GameObject uiButton;
+
 
     public enum QuestType
     {
