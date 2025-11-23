@@ -8,8 +8,8 @@ public class Player : Character
     public Transform LeftHand;
     public List<Item> inventory = new List<Item>();
 
-    // --- 1. เพิ่มตัวแปรนี้ ---
-    private IInteractable currentInteractable; // ตัวแปรเก็บเป้าหมายที่อยู่ใกล้
+    // --- 1. ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรน๏ฟฝ๏ฟฝ ---
+    private IInteractable currentInteractable; // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     [Header("Control")]
     public bool canReceiveInput = true;
 
@@ -26,17 +26,17 @@ public class Player : Character
 
     public void FixedUpdate()
     {
-        // *** 1. ตรวจสอบว่าสามารถเคลื่อนที่ได้หรือไม่ ***
+        // *** 1. ๏ฟฝ๏ฟฝวจ๏ฟฝอบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝรถ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ***
         if (canReceiveInput)
         {
             Move(_inputDirection);
             Turn(_inputDirection);
             Attack(_isAttacking);
         }
-        // *** 2. (ตัวเลือกเสริม): ถ้าถูกล็อก ให้หยุด RigidBody ทันที ***
+        // *** 2. (๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ): ๏ฟฝ๏ฟฝาถูก๏ฟฝ๏ฟฝอก ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝุด RigidBody ๏ฟฝัน๏ฟฝ๏ฟฝ ***
         else if (rb != null)
         {
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
 
@@ -56,7 +56,7 @@ public class Player : Character
 
     private void HandleInput()
     {
-        // *** 1. ตรวจสอบเงื่อนไขการรับ Input การเดิน ***
+        // *** 1. ๏ฟฝ๏ฟฝวจ๏ฟฝอบ๏ฟฝ๏ฟฝ๏ฟฝอนไขก๏ฟฝ๏ฟฝ๏ฟฝับ Input ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิน ***
         if (canReceiveInput)
         {
             float x = Input.GetAxis("Horizontal");
@@ -65,11 +65,11 @@ public class Player : Character
         }
         else
         {
-            // *** 2. สำคัญมาก: ถ้าถูกล็อก ต้องตั้ง Input เป็นศูนย์ ***
+            // *** 2. ๏ฟฝำคัญ๏ฟฝาก: ๏ฟฝ๏ฟฝาถูก๏ฟฝ๏ฟฝอก ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ Input ๏ฟฝ๏ฟฝ๏ฟฝูน๏ฟฝ๏ฟฝ ***
             _inputDirection = Vector3.zero;
         }
 
-        // ส่วน Attack และ Interact ยังคงทำงานได้ด้วยเมาส์/คีย์ E
+        // ๏ฟฝ๏ฟฝวน Attack ๏ฟฝ๏ฟฝ๏ฟฝ Interact ๏ฟฝัง๏ฟฝ๏ฟฝ๏ฟฝำงาน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ/๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ E
         if (Input.GetMouseButtonDown(0))
         {
             _isAttacking = true;
@@ -83,7 +83,7 @@ public class Player : Character
 
     public void Attack(bool isAttacking)
     {
-        // ... (โค้ด Attack ของคุณถูกต้องแล้ว ไม่ต้องแก้) ...
+        // ... (๏ฟฝ๏ฟฝ Attack ๏ฟฝอง๏ฟฝุณ๏ฟฝูก๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอง๏ฟฝ๏ฟฝ) ...
         if (isAttacking)
         {
             animator.SetTrigger("Attack");
@@ -97,38 +97,38 @@ public class Player : Character
         }
     }
 
-    // --- 3. แก้ไขเมธอด Interact() ---
+    // --- 3. ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอด Interact() ---
     private void Interact(bool interactable)
     {
-        if (interactable) // _isInteract ถูกตั้งค่าจาก HandleInput
+        if (interactable) // _isInteract ๏ฟฝูก๏ฟฝ๏ฟฝ้งค๏ฟฝาจาก HandleInput
         {
-            // เปลี่ยนจาก 'InFront' มาใช้ 'currentInteractable'
+            // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยน๏ฟฝาก 'InFront' ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ 'currentInteractable'
             if (currentInteractable != null && currentInteractable.isInteractable)
             {
                 currentInteractable.Interact(this);
             }
-            _isInteract = false; // เคลียร์ flag หลังทำงาน
+            _isInteract = false; // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ flag ๏ฟฝ๏ฟฝัง๏ฟฝำงาน
         }
     }
 
 
-    // --- 4. เพิ่ม 2 เมธอดนี้ (สำหรับให้ NPC เรียก) ---
+    // --- 4. ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ 2 ๏ฟฝ๏ฟฝ๏ฟฝอด๏ฟฝ๏ฟฝ๏ฟฝ (๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝ๏ฟฝ NPC ๏ฟฝ๏ฟฝ๏ฟฝยก) ---
 
-    // เมธอดสำหรับให้ NPC เรียกใช้ เมื่อผู้เล่น "เข้า" ระยะ
+    // ๏ฟฝ๏ฟฝ๏ฟฝอด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝ๏ฟฝ NPC ๏ฟฝ๏ฟฝ๏ฟฝยก๏ฟฝ๏ฟฝ ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอผ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ "๏ฟฝ๏ฟฝ๏ฟฝ" ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     public void SetInteractable(IInteractable interactable)
     {
         currentInteractable = interactable;
     }
 
-    // เมธอดสำหรับให้ NPC เรียกใช้ เมื่อผู้เล่น "ออก" จากระยะ
+    // ๏ฟฝ๏ฟฝ๏ฟฝอด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝ๏ฟฝ NPC ๏ฟฝ๏ฟฝ๏ฟฝยก๏ฟฝ๏ฟฝ ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอผ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ "๏ฟฝอก" ๏ฟฝาก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
     public void ClearInteractable(IInteractable interactable)
     {
-        // เช็คก่อนว่าใช่ตัวเดียวกับที่เก็บไว้มั้ย (กันบั๊กตอนอยู่ระหว่าง 2 NPC)
+        // ๏ฟฝ็คก๏ฟฝอน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝวกับ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ (๏ฟฝัน๏ฟฝ๏ฟฝ๊กตอน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาง 2 NPC)
         if (currentInteractable == interactable)
         {
             currentInteractable = null;
         }
     }
 
-    //... (ฟังก์ชันการรักษาและรับความเสียหายของคุณ) ...
+    //... (๏ฟฝัง๏ฟฝ๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยของ๏ฟฝุณ) ...
 }
