@@ -101,11 +101,6 @@ public class QuestManager : MonoBehaviour
 
             Debug.Log($"{selectedQuest.questName} {selectedQuest.questStatus}");
         }
-
-        if (Input.GetKeyDown(KeyCode.L)) //test
-        {
-            RemoveQuest();
-        }
     }
 
     public void DisplayQuest()
@@ -133,6 +128,7 @@ public class QuestManager : MonoBehaviour
     public void OnButtonClicked(Quest clickedQuest)
     {
         selectedQuest = clickedQuest;
+
         UpdateQuestDetails();
 
         questUI.SetActive(false);
