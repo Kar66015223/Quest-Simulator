@@ -37,6 +37,8 @@ public class QuestManager : MonoBehaviour
     public TMP_Text questProgressTitle;
     public TMP_Text[] questProgressStatus;
 
+    public bool alreadyRun = false;
+
     private Player player;
 
     private void Awake()
@@ -84,7 +86,15 @@ public class QuestManager : MonoBehaviour
             foreach (Quest q in questList)
             {
                 if (q.questStatus == Quest.QuestStatus.OnProgress)
+                {
+                    if (alreadyRun == false)
+                    {
+                        q.OnAccept(); 
+                        alreadyRun = true;
+                    }
+
                     q.CheckCompletion();
+                }
             }
 
             questProgressStatus[0].gameObject.SetActive(false);

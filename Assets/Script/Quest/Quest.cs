@@ -29,4 +29,6 @@ public abstract class Quest
     public abstract void QuestCompleted();
 
     public abstract void QuestFailed();
+
+    public abstract void OnAccept();
 }

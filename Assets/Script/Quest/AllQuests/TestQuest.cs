@@ -24,15 +24,25 @@ public class TestQuest : Quest
                 QuestFailed();
             } 
         }
+
+        Debug.Log($"{questName} CheckCompletion is running");
+    }
+
+    public override void OnAccept()
+    {
+        QuestProgressUIManager.Instance.TestQuestProgressUI.SetActive(true);
+        Debug.Log($"{questName} OnAccept is running");
     }
 
     public override void QuestCompleted()
     {
+        QuestManager.Instance.alreadyRun = false;
         Debug.Log($"{questName} completed!");
     }
 
     public override void QuestFailed()
     {
+        QuestManager.Instance.alreadyRun = false;
         Debug.Log($"{questName} failed!");
     }
 }

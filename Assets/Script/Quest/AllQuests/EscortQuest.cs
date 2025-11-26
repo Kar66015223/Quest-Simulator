@@ -14,6 +14,11 @@ public class EscortQuest : Quest
         throw new System.NotImplementedException();
     }
 
+    public override void OnAccept()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void QuestCompleted()
     {
         throw new System.NotImplementedException();

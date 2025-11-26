@@ -1,8 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CollectQuest : Quest
 {
-    public int random = Random.Range(20, 30);
+    public int random = 1/*Random.Range(20, 30)*/;
+    private int coins = GameManager.Instance.currentCoin;
     public CollectQuest()
     {
         this.questName = $"Collect {random} coins";
@@ -13,16 +15,42 @@ public class CollectQuest : Quest
 
     public override void CheckCompletion()
     {
-        throw new System.NotImplementedException();
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        string currentScene = LoadSceneManager.Instance.GetCurrentSceneName();
+
+        if (coins >= random && currentScene == "MainGame")
+        {
+            this.questStatus = QuestStatus.Completed;
+            QuestCompleted();
+        }
+
+        if (player == null)
+        {
+            this.questStatus = QuestStatus.Failed;
+            QuestFailed();
+        }
+
+        Debug.Log($"{questName} CheckCompletion is running");
+    }
+
+    public override void OnAccept()
+    {
+        QuestProgressUIManager.Instance.CollectQuestProgressUI.SetActive(true);
+
+        Debug.Log($"{questName} OnAccept is running");
     }
 
     public override void QuestCompleted()
     {
-        throw new System.NotImplementedException();
+        QuestManager.Instance.alreadyRun = false;
+
+        Debug.Log($"{questName} completed!");
     }
 
     public override void QuestFailed()
     {
-        throw new System.NotImplementedException();
+        QuestManager.Instance.alreadyRun = false;
+
+        Debug.Log($"{questName} failed!");
     }
 }

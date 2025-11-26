@@ -24,7 +24,7 @@ public sealed class GameManager : MonoBehaviour
     }
 
     [Header("Game State")]
-    public int currentScore = 0;
+    public int currentCoin = 0;
     public bool isGamePaused = false;
 
     [Header("UI Game")]
@@ -69,12 +69,16 @@ public sealed class GameManager : MonoBehaviour
             Debug.LogWarning("HPBar reference is missing in GameManager.");
         }
     }
-    public void AddScore(int amount)
+    public void AddCoin(int amount)
     {
-        currentScore += amount;
-        scoreText.text = currentScore.ToString();
-        Debug.Log($"Score updated: {currentScore}");
+        currentCoin += amount;
+        scoreText.text = currentCoin.ToString();
+        Debug.Log($"Score updated: {currentCoin}");
         // ‚§È¥ ”À√—∫Õ—ª‡¥µ UI, ∫—π∑÷°§–·ππ œ≈œ
+    }
+    public void UpdateCoinUI()
+    {
+        scoreText.text = currentCoin.ToString();
     }
 
     public void TogglePause()
