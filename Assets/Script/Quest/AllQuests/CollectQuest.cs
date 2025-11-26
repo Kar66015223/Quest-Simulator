@@ -4,7 +4,6 @@ using UnityEngine;
 public class CollectQuest : Quest
 {
     public int random = 1/*Random.Range(20, 30)*/;
-    private int coins = GameManager.Instance.currentCoin;
     public CollectQuest()
     {
         this.questName = $"Collect {random} coins";
@@ -15,6 +14,7 @@ public class CollectQuest : Quest
 
     public override void CheckCompletion()
     {
+        int coins = GameManager.Instance.currentCoin;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         string currentScene = LoadSceneManager.Instance.GetCurrentSceneName();
 
