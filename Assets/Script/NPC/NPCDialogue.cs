@@ -1,13 +1,10 @@
-// NPCDialogue.cs (©∫—∫·°È‰¢: ‡æ‘Ë¡ Prompt ‡¢È“¡“)
+Ôªø
 using UnityEngine;
 
 public class NPCDialogue : MonoBehaviour, IInteractable
 {
     public Dialogue dialogue;
     public DialogueManager dialogueManager;
-
-    // --- ‡æ‘Ë¡∫√√∑—¥π’È ---
-    public GameObject interactPrompt; // << ≈“° UI "°¥ E" ¡“„ Ë∑’Ëπ’Ë
 
     [SerializeField]
     private bool _isInteractable = true;
@@ -18,15 +15,14 @@ public class NPCDialogue : MonoBehaviour, IInteractable
         set { _isInteractable = value; }
     }
 
-    // --- ·°È‰¢ Interact() ---
+    // --- ‡πÅ‡∏Å‡πâ‡πÑ‡∏Ç Interact() ---
     public void Interact(Player player)
     {
         if (!isInteractable) return;
 
-        // --- ‡æ‘Ë¡§” —Ëß´ËÕπ Prompt ‡¡◊ËÕ‡√‘Ë¡§ÿ¬ ---
-        if (interactPrompt != null)
-            interactPrompt.SetActive(false);
-        // --- ®∫ Ë«π∑’Ë‡æ‘Ë¡ ---
+        // --- ‡πÅ‡∏Å‡πâ‡πÑ‡∏Ç: ‡∏ã‡πà‡∏≠‡∏ô Prompt ‡∏ú‡πà‡∏≤‡∏ô UIManager ---
+        UIManager.Instance.SetPromptActive(false);
+        // --- ‡∏à‡∏ö‡∏™‡πà‡∏ß‡∏ô‡∏ó‡∏µ‡πà‡πÅ‡∏Å‡πâ‡πÑ‡∏Ç ---
 
         if (dialogueManager == null)
             dialogueManager = FindObjectOfType<DialogueManager>();
@@ -37,7 +33,7 @@ public class NPCDialogue : MonoBehaviour, IInteractable
             Debug.LogError("DialogueManager not found in scene!");
     }
 
-    // --- ·°È‰¢ OnTriggerEnter ---
+    // --- ‡πÅ‡∏Å‡πâ‡πÑ‡∏Ç OnTriggerEnter ---
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -47,14 +43,13 @@ public class NPCDialogue : MonoBehaviour, IInteractable
             {
                 player.SetInteractable(this);
 
-                // --- ‡æ‘Ë¡ Logic ‡ª‘¥ Prompt ---
-                if (interactPrompt != null)
-                    interactPrompt.SetActive(true);
+                // --- ‡πÅ‡∏Å‡πâ‡πÑ‡∏Ç: ‡πÄ‡∏õ‡∏¥‡∏î Prompt ‡∏ú‡πà‡∏≤‡∏ô UIManager ---
+                UIManager.Instance.SetPromptActive(true, this.transform);
             }
         }
     }
 
-    // --- ·°È‰¢ OnTriggerExit ---
+    // --- ‡πÅ‡∏Å‡πâ‡πÑ‡∏Ç OnTriggerExit ---
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -64,10 +59,11 @@ public class NPCDialogue : MonoBehaviour, IInteractable
             {
                 player.ClearInteractable(this);
 
-                // --- ‡æ‘Ë¡ Logic ª‘¥ Prompt ---
-                if (interactPrompt != null)
-                    interactPrompt.SetActive(false);
+                // --- ‡πÅ‡∏Å‡πâ‡πÑ‡∏Ç: ‡πÄ‡∏õ‡∏¥‡∏î Prompt ‡∏ú‡πà‡∏≤‡∏ô UIManager ---
+                UIManager.Instance.SetPromptActive(false);
             }
         }
     }
+    
+
 }

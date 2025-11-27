@@ -188,7 +188,7 @@ public class DialogueManager : MonoBehaviour
             acceptQuestButton.gameObject.SetActive(false);
         }
         if (nextButton != null)
-        {
+        {   
             // อาจจะซ่อน Next Button ด้วยเพื่อความแน่ใจ
             nextButton.gameObject.SetActive(false);
         }
