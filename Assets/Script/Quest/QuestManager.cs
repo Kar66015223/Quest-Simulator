@@ -39,8 +39,6 @@ public class QuestManager : MonoBehaviour
     public TMP_Text questProgressTitle;
     public TMP_Text[] questProgressStatus;
 
-    public QuestSpawnerFactory factory;
-
     private Player player;
 
     private void Awake()

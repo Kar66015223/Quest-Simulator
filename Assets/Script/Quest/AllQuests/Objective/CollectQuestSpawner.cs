@@ -1,26 +1,22 @@
+using System.Linq;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
-using System.Linq;
 
-public class CollectQuestSpawner : MonoBehaviour, IObjectiveSpawner
+public class CollectQuestSpawner : MonoBehaviour
 {
     public CollectQuest collectQuest;
     public GameObject coinPrefab;
     private Player player;
 
-    private bool hasSpawned = false;
+    [SerializeField] private bool hasSpawned = false;
 
     public void Update()
     {
-        enabled = false;
-
-        if (QuestManager.Instance.selectedQuest != null)
+        if (QuestManager.Instance.selectedQuest == null ||
+            QuestManager.Instance.selectedQuest.questID != 2)
         {
-            if (QuestManager.Instance.selectedQuest.questID == 2)
-            {
-                enabled = true;
-            } 
+            return; //stop Update()
         }
 
         if (player == null)
@@ -34,9 +30,11 @@ public class CollectQuestSpawner : MonoBehaviour, IObjectiveSpawner
             hasSpawned = true;
         }
 
-        if (QuestManager.Instance.selectedQuest == null)
+        if (QuestManager.Instance.selectedQuest.questStatus == Quest.QuestStatus.Completed ||
+            QuestManager.Instance.selectedQuest.questStatus == Quest.QuestStatus.Failed)
         {
             ClearScene();
+            enabled = false;
         }
     }
 
@@ -63,7 +61,7 @@ public class CollectQuestSpawner : MonoBehaviour, IObjectiveSpawner
             Vector3 origin = new Vector3(x, rayHeight, z); // shoot ray from above
             Ray ray = new Ray(origin, Vector3.down);
 
-            Debug.DrawRay(origin, Vector3.down * 200f, Color.red, 5f);
+            //Debug.DrawRay(origin, Vector3.down * 200f, Color.red, 5f);
 
             if (collider.Raycast(ray, out RaycastHit hit, Mathf.Infinity) && hit.collider == collider)
             {
@@ -80,5 +78,7 @@ public class CollectQuestSpawner : MonoBehaviour, IObjectiveSpawner
         {
             Destroy(coin.gameObject);
         }
+
+        Debug.Log("ClearScene is running");
     }
 }

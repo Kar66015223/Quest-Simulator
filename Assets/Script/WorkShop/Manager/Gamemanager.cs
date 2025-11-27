@@ -25,6 +25,7 @@ public sealed class GameManager : MonoBehaviour
 
     [Header("Game State")]
     public int currentCoin = 0;
+    public int killCount = 0;
     public bool isGamePaused = false;
 
     [Header("UI Game")]
@@ -76,6 +77,13 @@ public sealed class GameManager : MonoBehaviour
         Debug.Log($"Score updated: {currentCoin}");
         // ‚§È¥ ”À√—∫Õ—ª‡¥µ UI, ∫—π∑÷°§–·ππ œ≈œ
     }
+
+    public void AddKill()
+    {
+        killCount++;
+        Debug.Log($"Kill updated: {killCount}");
+    }
+
     public void UpdateCoinUI()
     {
         scoreText.text = currentCoin.ToString();
