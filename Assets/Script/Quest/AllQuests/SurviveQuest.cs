@@ -12,6 +12,33 @@ public class SurviveQuest : Quest
     }
     public override void CheckCompletion()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        EnemySpawner spawners = Object.FindAnyObjectByType<EnemySpawner>();
+
+        string currentScene = LoadSceneManager.Instance.GetCurrentSceneName();
+
+        if (player == null)
+        {
+            questStatus = QuestStatus.Failed;
+            QuestFailed();
+            return;
+        }
+
+        QuestProgressUIManager.Instance.Timer.SetActive(true);
+
+        if (spawners != null)
+        {
+            if (!spawners.waveStarted)
+                return;
+
+            if (spawners.timeRemaining <= 0f)
+            {
+                questStatus = QuestStatus.Completed;
+                QuestCompleted();
+                return;
+            }
+        }
+
         Debug.Log($"{questName} CheckCompletion is running");
     }
 
@@ -22,11 +49,13 @@ public class SurviveQuest : Quest
 
     public override void QuestCompleted()
     {
+        QuestProgressUIManager.Instance.Timer.SetActive(false);
         Debug.Log($"{questName} completed!");
     }
 
     public override void QuestFailed()
     {
+        QuestProgressUIManager.Instance.Timer.SetActive(false);
         Debug.Log($"{questName} failed!");
     }
 }

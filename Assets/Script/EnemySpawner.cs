@@ -14,9 +14,10 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Wave Settings")]
     public float waveTime = 90f;   // เวลาในแต่ละ Wave (วินาที)
-    private float timeRemaining;   // เวลาคงเหลือ
+    public float timeRemaining { get; private set; }   // เวลาคงเหลือ
 
-    private bool isWaveActive = false;
+    public bool isWaveActive = false;
+    public bool waveStarted = false;
     private int currentEnemyCount = 0;
 
     private Coroutine spawnRoutine;
@@ -26,6 +27,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
+        waveTimerText = QuestProgressUIManager.Instance.Timer.GetComponent<TMP_Text>();
         StartWave();
         UpdateTimerUI(); // อัพเดท UI ทันทีตอนเริ่มเกม
     }
@@ -59,6 +61,8 @@ public class EnemySpawner : MonoBehaviour
     // เริ่ม Wave
     public void StartWave()
     {
+        waveStarted = true;
+
         timeRemaining = waveTime;
         isWaveActive = true;
 
