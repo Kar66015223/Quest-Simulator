@@ -1,19 +1,16 @@
-using System.Linq;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class CollectQuestSpawner : MonoBehaviour
+public class KillQuestSpawner : MonoBehaviour
 {
-    public GameObject coinPrefab;
+    public GameObject slimePrefab;
     private Player player;
 
-    [SerializeField] private bool hasSpawned = false;
+    private bool hasSpawned = false;
 
-    public void Update()
+    private void Update()
     {
         if (QuestManager.Instance.selectedQuest == null ||
-            QuestManager.Instance.selectedQuest.questID != 2)
+            QuestManager.Instance.selectedQuest.questID != 1)
         {
             return; //stop Update()
         }
@@ -40,12 +37,12 @@ public class CollectQuestSpawner : MonoBehaviour
     public void SpawnObjectives()
     {
         MeshCollider floorCol = GetComponent<MeshCollider>();
-        int maxCoins = 30;
+        int maxEnemies = 30;
 
-        for (int i = 0; i < maxCoins; i++)
+        for (int i = 0; i < maxEnemies; i++)
         {
             Vector3 randomSpawnPoint = GetRandomPointOnMesh(floorCol);
-            Instantiate(coinPrefab, randomSpawnPoint, Quaternion.identity); 
+            Instantiate(slimePrefab, randomSpawnPoint, Quaternion.identity);
         }
     }
 
@@ -73,9 +70,9 @@ public class CollectQuestSpawner : MonoBehaviour
 
     private void ClearScene()
     {
-        foreach (var coin in FindObjectsOfType<Coin>())
+        foreach (var enemy in FindObjectsOfType<Enemy>())
         {
-            Destroy(coin.gameObject);
+            Destroy(enemy.gameObject);
         }
 
         Debug.Log("ClearScene is running");

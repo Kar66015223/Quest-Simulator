@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class KillQuest : Quest
 {
-    public int killGoal = Random.Range(10, 25);
+    public int killGoal = 1/*Random.Range(10, 25)*/;
     public KillQuest()
     {
         this.questName = $"Kill {killGoal} slimes";
@@ -15,8 +15,9 @@ public class KillQuest : Quest
     public override void CheckCompletion()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+        string currentScene = LoadSceneManager.Instance.GetCurrentSceneName();
 
-        if (GameManager.Instance.killCount >= killGoal)
+        if (GameManager.Instance.killCount >= killGoal && currentScene == "MainGame")
         {
             this.questStatus = QuestStatus.Completed;
             QuestCompleted();
@@ -42,7 +43,7 @@ public class KillQuest : Quest
     {
         QuestProgressUIManager.Instance.KillQuestProgressUI.SetActive(false);
         GameManager.Instance.killCount = 0;
-        //GameManager.Instance.UpdateKillUI();
+        GameManager.Instance.UpdateKillUI();
 
         Debug.Log($"{questName} completed!");
     }
@@ -51,7 +52,7 @@ public class KillQuest : Quest
     {
         QuestProgressUIManager.Instance.KillQuestProgressUI.SetActive(false);
         GameManager.Instance.killCount = 0;
-        //GameManager.Instance.UpdateKillUI();
+        GameManager.Instance.UpdateKillUI();
 
         Debug.Log($"{questName} failed!");
     }

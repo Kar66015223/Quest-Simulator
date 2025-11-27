@@ -32,6 +32,7 @@ public sealed class GameManager : MonoBehaviour
     public GameObject pauseMenuUI;
     public TMP_Text scoreText;
     public Slider HPBar;
+    public TMP_Text killCountUI;
 
     // 3. Private Constructor Logic (ใช้ Awake() แทน Constructor ปกติใน Unity)
     private void Awake()
@@ -78,15 +79,21 @@ public sealed class GameManager : MonoBehaviour
         // โค้ดสำหรับอัปเดต UI, บันทึกคะแนน ฯลฯ
     }
 
-    public void AddKill()
+    public void AddKill(int amount)
     {
-        killCount++;
+        killCount += amount;
+        killCountUI.text = killCount.ToString();
         Debug.Log($"Kill updated: {killCount}");
     }
 
     public void UpdateCoinUI()
     {
         scoreText.text = currentCoin.ToString();
+    }
+
+    public void UpdateKillUI()
+    {
+        killCountUI.text = killCount.ToString();
     }
 
     public void TogglePause()
