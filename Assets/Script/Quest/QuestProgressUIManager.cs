@@ -31,7 +31,7 @@ public class QuestProgressUIManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Duplicate QuestManager found. Destroying self.");
+            Debug.Log("Duplicate QuestProgressUIManager found. Destroying self.");
             Destroy(gameObject);
         }
     }

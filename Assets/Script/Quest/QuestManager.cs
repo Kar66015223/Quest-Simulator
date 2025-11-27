@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
@@ -37,7 +39,7 @@ public class QuestManager : MonoBehaviour
     public TMP_Text questProgressTitle;
     public TMP_Text[] questProgressStatus;
 
-    public bool alreadyRun = false;
+    public QuestSpawnerFactory factory;
 
     private Player player;
 
@@ -87,12 +89,7 @@ public class QuestManager : MonoBehaviour
             {
                 if (q.questStatus == Quest.QuestStatus.OnProgress)
                 {
-                    if (alreadyRun == false)
-                    {
-                        q.OnAccept(); 
-                        alreadyRun = true;
-                    }
-
+                    q.OnAccept();
                     q.CheckCompletion();
                 }
             }
@@ -165,15 +162,15 @@ public class QuestManager : MonoBehaviour
     {
         if (selectedQuest != null)
         {
+            questProgressUI.SetActive(false);
+            questProgressStatus[0].gameObject.SetActive(false);
+            questProgressStatus[1].gameObject.SetActive(false);
+
             if (selectedQuest.questStatus == Quest.QuestStatus.Completed)
             {
                 questList.Remove(selectedQuest);
                 Destroy(selectedQuest.uiButton);
                 selectedQuest = null;
-
-                questProgressUI.SetActive(false);
-                questProgressStatus[0].gameObject.SetActive(false);
-                questProgressStatus[1].gameObject.SetActive(false);
 
                 return;
             }
@@ -181,10 +178,6 @@ public class QuestManager : MonoBehaviour
             if (selectedQuest.questStatus == Quest.QuestStatus.Failed)
             {
                 selectedQuest = null;
-
-                questProgressUI.SetActive(false);
-                questProgressStatus[0].gameObject.SetActive(false);
-                questProgressStatus[1].gameObject.SetActive(false);
             } 
         }
     }

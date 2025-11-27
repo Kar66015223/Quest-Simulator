@@ -36,13 +36,11 @@ public class TestQuest : Quest
 
     public override void QuestCompleted()
     {
-        QuestManager.Instance.alreadyRun = false;
         Debug.Log($"{questName} completed!");
     }
 
     public override void QuestFailed()
     {
-        QuestManager.Instance.alreadyRun = false;
         Debug.Log($"{questName} failed!");
     }
 }

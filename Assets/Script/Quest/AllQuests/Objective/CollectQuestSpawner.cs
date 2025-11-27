@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
 
 public class CollectQuestSpawner : MonoBehaviour, IObjectiveSpawner
 {
@@ -12,6 +13,16 @@ public class CollectQuestSpawner : MonoBehaviour, IObjectiveSpawner
 
     public void Update()
     {
+        enabled = false;
+
+        if (QuestManager.Instance.selectedQuest != null)
+        {
+            if (QuestManager.Instance.selectedQuest.questID == 2)
+            {
+                enabled = true;
+            } 
+        }
+
         if (player == null)
         {
             player = FindFirstObjectByType<Player>();
@@ -21,6 +32,11 @@ public class CollectQuestSpawner : MonoBehaviour, IObjectiveSpawner
         {
             SpawnObjectives();
             hasSpawned = true;
+        }
+
+        if (QuestManager.Instance.selectedQuest == null)
+        {
+            ClearScene();
         }
     }
 
@@ -56,5 +72,13 @@ public class CollectQuestSpawner : MonoBehaviour, IObjectiveSpawner
         }
 
         return collider.transform.position;
+    }
+
+    private void ClearScene()
+    {
+        foreach (var coin in FindObjectsOfType<Coin>())
+        {
+            Destroy(coin.gameObject);
+        }
     }
 }

@@ -10,6 +10,7 @@ public class CollectQuest : Quest
         this.questDesc = "I lost some coin on the battleground, find and return them to me";
         this.questType = QuestType.SideQuest;
         this.questStatus = QuestStatus.Pending;
+        this.questID = 2;
     }
 
     public override void CheckCompletion()
@@ -42,14 +43,20 @@ public class CollectQuest : Quest
 
     public override void QuestCompleted()
     {
-        QuestManager.Instance.alreadyRun = false;
+        QuestProgressUIManager.Instance.CollectQuestProgressUI.SetActive(false);
+
+        GameManager.Instance.currentCoin = 0;
+        GameManager.Instance.UpdateCoinUI();
 
         Debug.Log($"{questName} completed!");
     }
 
     public override void QuestFailed()
     {
-        QuestManager.Instance.alreadyRun = false;
+        QuestProgressUIManager.Instance.CollectQuestProgressUI.SetActive(false);
+
+        GameManager.Instance.currentCoin = 0;
+        GameManager.Instance.UpdateCoinUI();
 
         Debug.Log($"{questName} failed!");
     }
