@@ -33,6 +33,7 @@ public sealed class GameManager : MonoBehaviour
     public TMP_Text scoreText;
     public Slider HPBar;
     public TMP_Text killCountUI;
+    public Image bossHPBar;
 
     // 3. Private Constructor Logic (ใช้ Awake() แทน Constructor ปกติใน Unity)
     private void Awake()
@@ -71,6 +72,7 @@ public sealed class GameManager : MonoBehaviour
             Debug.LogWarning("HPBar reference is missing in GameManager.");
         }
     }
+
     public void AddCoin(int amount)
     {
         currentCoin += amount;

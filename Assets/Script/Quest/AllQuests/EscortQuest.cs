@@ -1,11 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EscortQuest : Quest
 {
     public EscortQuest()
     {
-        this.questName = "Escort TurtleShell";
-        this.questDesc = "I lost my pet turtle on the way here, I miss him. Find and bring him back to me.";
+        this.questName = "ช่วยเหลือเต่า";
+        this.questDesc = "ฉันพลัดหลงกับเต่าสัตว์เลี้ยงของฉันระหว่างทางมาที่นี่ ช่วยออกไปตามหามันกลับมาที";
         this.questType = QuestType.SideQuest;
         this.questStatus = QuestStatus.Pending;
     }

@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class EnemyMovetoPlayer : Enemy
 {
-
     private void Update()
     {
         if (player == null)
@@ -32,7 +31,11 @@ public class EnemyMovetoPlayer : Enemy
         health -= amount;
         if (health <= 0)
         {
-            GameManager.Instance.AddKill(1);
+            if (QuestManager.Instance.selectedQuest.questID == 1)
+            {
+                GameManager.Instance.AddKill(1); 
+            }
+
             Destroy(gameObject);
         }
     }

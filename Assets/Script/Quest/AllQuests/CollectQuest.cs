@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+﻿using Unity.VisualScripting;
 using UnityEngine;
 
 public class CollectQuest : Quest
@@ -6,8 +6,8 @@ public class CollectQuest : Quest
     public int random = 1/*Random.Range(20, 30)*/;
     public CollectQuest()
     {
-        this.questName = $"Collect {random} coins";
-        this.questDesc = "I lost some coin on the battleground, find and return them to me";
+        this.questName = $"เก็บเหรียญทอง {random} เหรียญ";
+        this.questDesc = "ฉันทำเหรียณทองหล่นหายระหว่างทางมาที่นี่ ช่วยออกไปตามหาพวกมันกลับมาให้ฉันที";
         this.questType = QuestType.SideQuest;
         this.questStatus = QuestStatus.Pending;
         this.questID = 2;

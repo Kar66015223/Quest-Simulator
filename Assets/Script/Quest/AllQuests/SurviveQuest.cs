@@ -1,31 +1,32 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SurviveQuest : Quest
 {
     public SurviveQuest()
     {
-        this.questName = "Stay Alive";
-        this.questDesc = "A horde of slimes are coming to the village, go out and distract them as long as you can";
+        this.questName = "เอาชีวิตรอด";
+        this.questDesc = "มีฝูงสไลม์ขนาดใหญ่กำลังบุกมาที่หมู่บ้าน จงออกไปหยุดมันให้นานที่สุดเท่าที่ทำได้";
         this.questType = QuestType.MainQuest;
         this.questStatus = QuestStatus.Pending;
+        this.questID = 4;
     }
     public override void CheckCompletion()
     {
-        throw new System.NotImplementedException();
+        Debug.Log($"{questName} CheckCompletion is running");
     }
 
     public override void OnAccept()
     {
-        throw new System.NotImplementedException();
+        Debug.Log($"{questName} OnAccept is running");
     }
 
     public override void QuestCompleted()
     {
-        throw new System.NotImplementedException();
+        Debug.Log($"{questName} completed!");
     }
 
     public override void QuestFailed()
     {
-        throw new System.NotImplementedException();
+        Debug.Log($"{questName} failed!");
     }
 }

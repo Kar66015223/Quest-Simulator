@@ -395,19 +395,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1924301867}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.703669
+      value: 9.63
       objectReference: {fileID: 0}
     - target: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.402164
+      value: 1.268
       objectReference: {fileID: 0}
     - target: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.29002
+      value: -5.246
       objectReference: {fileID: 0}
     - target: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -492,11 +492,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.70781434
   m_Center: {x: -0.00000014901161, y: 0.50358963, z: -0.000000039115548}
---- !u!4 &78182589 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
-  m_PrefabInstance: {fileID: 78182583}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &96121761
 GameObject:
   m_ObjectHideFlags: 0
@@ -2569,7 +2564,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 403.91406, y: -327.58606}
+  m_AnchoredPosition: {x: 4.843, y: -327.59}
   m_SizeDelta: {x: 505.208, y: 121.5989}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &531815872
@@ -3966,6 +3961,7 @@ MonoBehaviour:
   scoreText: {fileID: 1482733908}
   HPBar: {fileID: 235735563}
   killCountUI: {fileID: 2052128329}
+  bossHPBar: {fileID: 0}
 --- !u!114 &791573711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7149,11 +7145,11 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
+  m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 1
+  m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
 --- !u!1 &1580217330
 GameObject:
@@ -9096,7 +9092,6 @@ Transform:
   m_Children:
   - {fileID: 1803925051}
   - {fileID: 1709196245}
-  - {fileID: 78182589}
   - {fileID: 1727691260}
   - {fileID: 49340425}
   - {fileID: 203882647}
@@ -9128,7 +9123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1938511083
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9665,8 +9660,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: texts
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9500f9c861b2d2646b043f2d8b450174, type: 2}
+  m_sharedMaterial: {fileID: 5013397889141110080, guid: 9500f9c861b2d2646b043f2d8b450174, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9968,7 +9963,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0/0
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10541,8 +10536,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Quest1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9500f9c861b2d2646b043f2d8b450174, type: 2}
+  m_sharedMaterial: {fileID: 5013397889141110080, guid: 9500f9c861b2d2646b043f2d8b450174, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10775,6 +10770,7 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 1729820277}
+  - {fileID: 78182583}
   - {fileID: 1924301867}
   - {fileID: 945590887}
   - {fileID: 791573714}

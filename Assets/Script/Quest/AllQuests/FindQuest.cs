@@ -1,11 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FindQuest : Quest
 {
     public FindQuest()
     {
-        this.questName = "Find diamond";
-        this.questDesc = "I lost my diamond on the way here, it was in a crate, find and return them to me";
+        this.questName = "ตามหาเพชร";
+        this.questDesc = "ฉันทำเพชรอันล้ำค่าหายระหว่างทางมาที่นี่ ช่วยออกไปตามหามันที";
         this.questType = QuestType.SideQuest;
         this.questStatus = QuestStatus.Pending;
     }

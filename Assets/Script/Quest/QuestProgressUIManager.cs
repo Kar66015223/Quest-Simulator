@@ -18,6 +18,7 @@ public class QuestProgressUIManager : MonoBehaviour
 
     public GameObject KillQuestProgressUI;
     public GameObject CollectQuestProgressUI;
+
     public GameObject TestQuestProgressUI;
 
     private void Awake()

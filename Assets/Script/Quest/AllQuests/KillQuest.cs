@@ -1,12 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class KillQuest : Quest
 {
     public int killGoal = 1/*Random.Range(10, 25)*/;
     public KillQuest()
     {
-        this.questName = $"Kill {killGoal} slimes";
-        this.questDesc = "Go to the battleground and kill some slimes";
+        this.questName = $"ล่าสไลม์ {killGoal} ตัว";
+        this.questDesc = "ข้างนอกนั่นมีสไลม์เพ่นพ่านอยู่เต็มไปหมด ออกไปจัดการมันให้จำนวนมันน้อยลงหน่อย";
         this.questType = QuestType.SideQuest;
         this.questStatus = QuestStatus.Pending;
         this.questID = 1;
