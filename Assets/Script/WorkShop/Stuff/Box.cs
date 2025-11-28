@@ -49,8 +49,14 @@ public class Box : Stuff, IInteractable, Idestoryable
         if (health <= 0)
         {
             Debug.Log(transform.position);
-            GameObject g = Instantiate(DropItem, transform.position, Quaternion.identity);
-            g.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+
+            float chance = UnityEngine.Random.value;
+            if (chance <= 0.3f)
+            {
+                GameObject g = Instantiate(DropItem, transform.position, Quaternion.identity);
+                g.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z); 
+            }
+
             OnDestory?.Invoke(this);
             Destroy(gameObject);
         }

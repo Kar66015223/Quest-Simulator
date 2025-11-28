@@ -20,7 +20,7 @@ public class QuestProgressUIManager : MonoBehaviour
     public GameObject CollectQuestProgressUI;
 
     public GameObject Timer;
-
+    public GameObject FindQuestProgressUI;
     public GameObject TestQuestProgressUI;
 
     private void Awake()

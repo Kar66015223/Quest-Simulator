@@ -1,19 +1,16 @@
-using System.Linq;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class CollectQuestSpawner : MonoBehaviour
+public class FindQuestSpawner : MonoBehaviour
 {
-    public GameObject coinPrefab;
+    public GameObject boxPrefab;
     private Player player;
 
-    [SerializeField] private bool hasSpawned = false;
+    private bool hasSpawned = false;
 
     public void Update()
     {
         if (QuestManager.Instance.selectedQuest == null ||
-            QuestManager.Instance.selectedQuest.questID != 2)
+            QuestManager.Instance.selectedQuest.questID != 5)
         {
             return; //stop Update()
         }
@@ -40,12 +37,12 @@ public class CollectQuestSpawner : MonoBehaviour
     public void SpawnObjectives()
     {
         MeshCollider floorCol = GetComponent<MeshCollider>();
-        int maxCoins = 30;
+        int maxBox = 30;
 
-        for (int i = 0; i < maxCoins; i++)
+        for (int i = 0; i < maxBox; i++)
         {
             Vector3 randomSpawnPoint = GetRandomPointOnMesh(floorCol);
-            Instantiate(coinPrefab, randomSpawnPoint, Quaternion.identity); 
+            Instantiate(boxPrefab, randomSpawnPoint, Quaternion.identity);
         }
     }
 
@@ -64,7 +61,7 @@ public class CollectQuestSpawner : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity) && hit.collider == collider)
             {
-                return hit.point + hit.normal * 1;
+                return hit.point + hit.normal * 0.5f;
             }
         }
 
@@ -73,9 +70,9 @@ public class CollectQuestSpawner : MonoBehaviour
 
     private void ClearScene()
     {
-        foreach (var coin in FindObjectsOfType<Coin>())
+        foreach (var box in FindObjectsOfType<Box>())
         {
-            Destroy(coin.gameObject);
+            Destroy(box.gameObject);
         }
 
         Debug.Log("ClearScene is running");

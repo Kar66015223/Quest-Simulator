@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CollectQuest : Quest
 {
-    public int random = 1/*Random.Range(20, 30)*/;
+    public int random = Random.Range(20, 30);
     public CollectQuest()
     {
         this.questName = $"เก็บเหรียญทอง {random} เหรียญ";

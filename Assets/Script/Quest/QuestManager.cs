@@ -71,7 +71,7 @@ public class QuestManager : MonoBehaviour
 
         questList.Add(new SurviveQuest());
         questList.Add(new FindQuest());
-        questList.Add(new EscortQuest());
+        questList.Add(new TestQuest());
 
         DisplayQuest();
     }

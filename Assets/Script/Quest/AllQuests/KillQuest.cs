@@ -2,7 +2,7 @@
 
 public class KillQuest : Quest
 {
-    public int killGoal = 1/*Random.Range(10, 25)*/;
+    public int killGoal = Random.Range(10, 20);
     public KillQuest()
     {
         this.questName = $"ล่าสไลม์ {killGoal} ตัว";

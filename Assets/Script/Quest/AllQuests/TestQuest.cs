@@ -1,13 +1,14 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TestQuest : Quest
 {
     public TestQuest()
     {
-        this.questName = "Press E";
-        this.questDesc = "Press E to complete this quest!\nPress R to fail this quest!";
+        this.questName = "กด E";
+        this.questDesc = "กด E เพื่อเคลียร์เควสนี้!\nกด R เพื่อล้มเกลวเควสนี้!";
         this.questType = QuestType.SideQuest;
         this.questStatus = QuestStatus.Pending;
+        this.questID = 6;
     }
     public override void CheckCompletion()
     {
@@ -36,11 +37,13 @@ public class TestQuest : Quest
 
     public override void QuestCompleted()
     {
+        QuestProgressUIManager.Instance.TestQuestProgressUI.SetActive(false);
         Debug.Log($"{questName} completed!");
     }
 
     public override void QuestFailed()
     {
+        QuestProgressUIManager.Instance.TestQuestProgressUI.SetActive(false);
         Debug.Log($"{questName} failed!");
     }
 }

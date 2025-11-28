@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: 
-  _maxHealth: 100
+  _maxHealth: 500
   Damage: 10
   Deffent: 10
   movementSpeed: 5

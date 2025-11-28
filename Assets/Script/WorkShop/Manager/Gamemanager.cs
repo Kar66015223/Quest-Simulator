@@ -26,6 +26,7 @@ public sealed class GameManager : MonoBehaviour
     [Header("Game State")]
     public int currentCoin = 0;
     public int killCount = 0;
+    public int currentDiamond = 0;
     public bool isGamePaused = false;
 
     [Header("UI Game")]
@@ -33,7 +34,7 @@ public sealed class GameManager : MonoBehaviour
     public TMP_Text scoreText;
     public Slider HPBar;
     public TMP_Text killCountUI;
-    public Image bossHPBar;
+    public TMP_Text currentDiamondUI;
 
     // 3. Private Constructor Logic (ใช้ Awake() แทน Constructor ปกติใน Unity)
     private void Awake()
@@ -88,6 +89,12 @@ public sealed class GameManager : MonoBehaviour
         Debug.Log($"Kill updated: {killCount}");
     }
 
+    public void AddDiamond(int amount)
+    {
+        currentDiamond += amount;
+        currentDiamondUI.text = currentDiamond.ToString();
+    }
+
     public void UpdateCoinUI()
     {
         scoreText.text = currentCoin.ToString();
@@ -96,6 +103,11 @@ public sealed class GameManager : MonoBehaviour
     public void UpdateKillUI()
     {
         killCountUI.text = killCount.ToString();
+    }
+
+    public void UpdateDiamondUI()
+    {
+        currentDiamondUI.text = currentDiamond.ToString();
     }
 
     public void TogglePause()
